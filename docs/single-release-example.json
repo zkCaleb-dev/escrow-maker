@@ -1,0 +1,39 @@
+{
+  "signer": "GB6MP3L6UGIDY6O6MXNLSKHLXT2T2TCMPZIZGUTOGYKOLHW7EORWMFCK",
+  "engagementId": "ENG-SINGLE-001",
+  "title": "Website Development Project",
+  "description": "Complete corporate website redesign with modern UI/UX",
+  "roles": {
+    "approver": "GB6MP3L6UGIDY6O6MXNLSKHLXT2T2TCMPZIZGUTOGYKOLHW7EORWMFCK",
+    "serviceProvider": "GB6MP3L6UGIDY6O6MXNLSKHLXT2T2TCMPZIZGUTOGYKOLHW7EORWMFCK",
+    "platformAddress": "GB6MP3L6UGIDY6O6MXNLSKHLXT2T2TCMPZIZGUTOGYKOLHW7EORWMFCK",
+    "releaseSigner": "GB6MP3L6UGIDY6O6MXNLSKHLXT2T2TCMPZIZGUTOGYKOLHW7EORWMFCK",
+    "disputeResolver": "GB6MP3L6UGIDY6O6MXNLSKHLXT2T2TCMPZIZGUTOGYKOLHW7EORWMFCK",
+    "receiver": "GB6MP3L6UGIDY6O6MXNLSKHLXT2T2TCMPZIZGUTOGYKOLHW7EORWMFCK"
+  },
+  "amount": 100000000,
+  "platformFee": 5,
+  "milestones": [
+    {
+      "description": "Design and wireframes completion",
+      "status": "pending",
+      "evidence": "",
+      "approved": false
+    },
+    {
+      "description": "Frontend development",
+      "status": "pending",
+      "evidence": "",
+      "approved": false
+    },
+    {
+      "description": "Backend integration and deployment",
+      "status": "pending",
+      "evidence": "",
+      "approved": false
+    }
+  ],
+  "trustline": {
+    "address": "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA"
+  }
+}

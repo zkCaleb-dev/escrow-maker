@@ -1,0 +1,71 @@
+{
+  "signer": "GB6MP3L6UGIDY6O6MXNLSKHLXT2T2TCMPZIZGUTOGYKOLHW7EORWMFCK",
+  "engagementId": "ENG-MULTI-001",
+  "title": "Mobile App Development with Milestones",
+  "description": "iOS and Android app development with staged payments",
+  "roles": {
+    "approver": "GB6MP3L6UGIDY6O6MXNLSKHLXT2T2TCMPZIZGUTOGYKOLHW7EORWMFCK",
+    "serviceProvider": "GB6MP3L6UGIDY6O6MXNLSKHLXT2T2TCMPZIZGUTOGYKOLHW7EORWMFCK",
+    "platformAddress": "GB6MP3L6UGIDY6O6MXNLSKHLXT2T2TCMPZIZGUTOGYKOLHW7EORWMFCK",
+    "releaseSigner": "GB6MP3L6UGIDY6O6MXNLSKHLXT2T2TCMPZIZGUTOGYKOLHW7EORWMFCK",
+    "disputeResolver": "GB6MP3L6UGIDY6O6MXNLSKHLXT2T2TCMPZIZGUTOGYKOLHW7EORWMFCK"
+  },
+  "platformFee": 5,
+  "milestones": [
+    {
+      "description": "UI/UX Design Phase",
+      "status": "pending",
+      "evidence": "",
+      "amount": 30000000,
+      "receiver": "GB6MP3L6UGIDY6O6MXNLSKHLXT2T2TCMPZIZGUTOGYKOLHW7EORWMFCK",
+      "flags": {
+        "disputed": false,
+        "released": false,
+        "resolved": false,
+        "approved": false
+      }
+    },
+    {
+      "description": "Frontend Development (iOS & Android)",
+      "status": "pending",
+      "evidence": "",
+      "amount": 50000000,
+      "receiver": "GB6MP3L6UGIDY6O6MXNLSKHLXT2T2TCMPZIZGUTOGYKOLHW7EORWMFCK",
+      "flags": {
+        "disputed": false,
+        "released": false,
+        "resolved": false,
+        "approved": false
+      }
+    },
+    {
+      "description": "Backend API Integration",
+      "status": "pending",
+      "evidence": "",
+      "amount": 40000000,
+      "receiver": "GB6MP3L6UGIDY6O6MXNLSKHLXT2T2TCMPZIZGUTOGYKOLHW7EORWMFCK",
+      "flags": {
+        "disputed": false,
+        "released": false,
+        "resolved": false,
+        "approved": false
+      }
+    },
+    {
+      "description": "Testing and Deployment",
+      "status": "pending",
+      "evidence": "",
+      "amount": 20000000,
+      "receiver": "GB6MP3L6UGIDY6O6MXNLSKHLXT2T2TCMPZIZGUTOGYKOLHW7EORWMFCK",
+      "flags": {
+        "disputed": false,
+        "released": false,
+        "resolved": false,
+        "approved": false
+      }
+    }
+  ],
+  "trustline": {
+    "address": "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA"
+  }
+}
