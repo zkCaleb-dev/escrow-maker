@@ -20,6 +20,8 @@ const changeStatusCmd = require('../lib/commands/change-status');
 // Workflow commands
 const testSingleReleaseCmd = require('../lib/commands/test-single-release');
 const testSingleDisputeCmd = require('../lib/commands/test-single-dispute');
+const testMultiReleaseCmd = require('../lib/commands/test-multi-release');
+const testMultiDisputeCmd = require('../lib/commands/test-multi-dispute');
 
 program
   .name('escrow')
@@ -47,5 +49,7 @@ program.addCommand(changeStatusCmd);
 // Workflow test commands
 program.addCommand(testSingleReleaseCmd);
 program.addCommand(testSingleDisputeCmd);
+program.addCommand(testMultiReleaseCmd);
+program.addCommand(testMultiDisputeCmd);
 
 program.parse(process.argv);
