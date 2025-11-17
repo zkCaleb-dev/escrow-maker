@@ -269,6 +269,48 @@ Best for projects where:
 
 ---
 
+## CLI Workflow Commands
+
+The Escrow Maker CLI provides automated workflow commands for testing:
+
+### Single-Release Workflows
+- **`escrow test-single-release`**: Full happy path (deploy → fund → change-status → approve → release)
+- **`escrow test-single-dispute`**: Dispute flow using 2 wallets (deploy → fund → dispute → resolve)
+
+### Multi-Release Workflows
+- **`escrow test-multi-release`**: Process multiple milestones (deploy → fund → process each milestone)
+- **`escrow test-multi-dispute`**: Multi-release with dispute using 2 wallets
+
+All workflows use default values from configuration (`~/.escrow/config.json`) and can be customized with CLI flags.
+
+---
+
+## API Environment Limitations
+
+### Dev Environment (`dev.api.trustlesswork.com`)
+
+**Important:** The dev environment has operational limits:
+
+- **Fund amount limit**: ~1000 stroops per fund operation
+- **Recommended defaults**: Use amounts ≤ 1000 for testing
+- **Error handling**: Larger amounts may return misleading errors (e.g., "Invalid milestone index")
+
+**Recommended defaults for dev:**
+```json
+{
+  "testDefaults": {
+    "amount": 1000,
+    "multiAmounts": "500,500"
+  }
+}
+```
+
+### Production Environment (`api.trustlesswork.com`)
+
+No known operational limits - use realistic amounts based on your use case.
+
+---
+
 ## Notes
 
 1. **Addresses must be valid Stellar addresses** starting with 'G'
@@ -276,3 +318,4 @@ Best for projects where:
 3. **Memo is i128** for compatibility with Stellar memos
 4. **Status** field typically: "pending", "completed", "disputed"
 5. **Evidence** is initially empty, filled upon milestone completion
+6. **Dev environment**: Use small amounts (≤1000) for testing to avoid API limits

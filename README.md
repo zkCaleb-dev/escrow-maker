@@ -84,10 +84,17 @@ escrow test-single-release
 
 # El comando ejecutará automáticamente:
 # 1. Deploy escrow
-# 2. Fund escrow (10 USDC)
+# 2. Fund escrow
 # 3. Change milestone status
 # 4. Approve milestone
 # 5. Release funds
+
+# O prueba un flujo multi-release con milestones
+escrow test-multi-release
+
+# O prueba un flujo con disputa
+escrow test-single-dispute
+escrow test-multi-dispute
 ```
 
 ---
@@ -174,7 +181,7 @@ escrow wallet set-default resolver -n mainnet
 
 ### 2. Comandos de Workflow (Testing Automático)
 
-Los workflows ejecutan flujos completos de escrow automáticamente, perfectos para testing.
+Los workflows ejecutan flujos completos de escrow automáticamente, perfectos para testing. Incluyen tanto **single-release** (un solo pago) como **multi-release** (pagos por milestone).
 
 #### 2.1 Test Single-Release (Flujo Exitoso)
 
@@ -194,11 +201,16 @@ escrow test-single-release \
 ```
 
 **Opciones:**
-- `--amount <stroops>`: Cantidad a fondear (default: 100000000 = 10 USDC)
+- `--amount <stroops>`: Cantidad a fondear (default: 1000)
 - `--wallet <nombre>`: Wallet a usar (default: main)
 - `-n, --network <red>`: Red a usar (default: testnet)
 - `--env <entorno>`: Entorno: local o dev (default: dev)
 - `-v, --verbose`: Salida detallada
+
+**⚠️ Limitación en entorno dev:**
+- El entorno `dev` tiene un límite de ~1000 stroops por operación de fund
+- Por eso el default es 1000 en lugar de cantidades mayores
+- En `mainnet` puedes usar cantidades mayores sin problema
 
 **Lo que hace:**
 ```
@@ -227,7 +239,7 @@ escrow test-single-dispute \
 ```
 
 **Opciones:**
-- `--amount <stroops>`: Cantidad a fondear (default: 100000000)
+- `--amount <stroops>`: Cantidad a fondear (default: 1000)
 - `--wallet <nombre>`: Wallet principal (default: main)
 - `--resolver-wallet <nombre>`: Wallet que resuelve la disputa (default: resolver)
 - `--split <ratio>`: División de fondos como 30:70 (default: 50:50)
@@ -247,6 +259,85 @@ escrow test-single-dispute \
 
 **⚡ Importante:** Este workflow usa 2 wallets diferentes:
 - `--wallet main`: Para deploy, fund y dispute
+- `--resolver-wallet resolver`: Para resolver la disputa
+
+#### 2.3 Test Multi-Release (Flujo con Milestones)
+
+Ejecuta un flujo completo de escrow multi-release con 2 milestones:
+
+```bash
+# Uso básico
+escrow test-multi-release
+
+# Con opciones personalizadas
+escrow test-multi-release \
+  --milestones 3 \
+  --amounts "300,400,300" \
+  --wallet main \
+  -v
+```
+
+**Opciones:**
+- `--milestones <número>`: Cantidad de milestones (default: 2)
+- `--amounts <lista>`: Cantidades separadas por comas (default: "500,500")
+- `--wallet <nombre>`: Wallet a usar (default: main)
+- `-n, --network <red>`: Red a usar (default: testnet)
+- `--env <entorno>`: Entorno (default: dev)
+- `-v, --verbose`: Salida detallada
+
+**Lo que hace:**
+```
+[1/7] Deploy multi-release     → Despliega contrato con N milestones
+[2/7] Fund escrow              → Fondea el escrow completo (suma total)
+[3/7] Process milestone 1      → Change status → Approve → Release funds
+[4/7] Process milestone 2      → Change status → Approve → Release funds
+...
+[7/7] Complete                 → Todos los milestones procesados
+```
+
+**⚠️ Nota sobre cantidades:**
+- En entorno `dev`, las cantidades están limitadas a ~1000 stroops por operación
+- Los defaults están configurados para funcionar con esta limitación
+- En `mainnet` puedes usar cantidades mayores
+
+#### 2.4 Test Multi-Dispute (Flujo con Disputa en Milestone)
+
+Ejecuta un flujo de escrow multi-release con disputa usando **2 wallets**:
+
+```bash
+# Uso básico
+escrow test-multi-dispute
+
+# Con opciones personalizadas
+escrow test-multi-dispute \
+  --amount 1000 \
+  --wallet main \
+  --resolver-wallet resolver \
+  --split 40:60 \
+  -v
+```
+
+**Opciones:**
+- `--amount <stroops>`: Cantidad del milestone a disputar (default: 1000)
+- `--wallet <nombre>`: Wallet principal (default: main)
+- `--resolver-wallet <nombre>`: Wallet que resuelve la disputa (default: resolver)
+- `--split <ratio>`: División de fondos como 40:60 (default: 50:50)
+- `-n, --network <red>`: Red a usar
+- `--env <entorno>`: Entorno
+- `-v, --verbose`: Salida detallada
+
+**Lo que hace:**
+```
+[1/5] Deploy multi-release     → Despliega con disputeResolver = resolver wallet
+[2/5] Fund escrow              → Fondea (wallet: main)
+[3/5] Change status            → Cambia milestone a "completed" (wallet: main)
+[4/5] Dispute milestone        → Inicia disputa del milestone (wallet: main)
+[5/5] Resolve dispute          → Resuelve disputa (wallet: resolver) ⚡
+       - Split según ratio especificado
+```
+
+**⚡ Importante:** Este workflow usa 2 wallets diferentes:
+- `--wallet main`: Para deploy, fund, change status y dispute
 - `--resolver-wallet resolver`: Para resolver la disputa
 
 ---
@@ -488,11 +579,11 @@ Tu configuración se almacena en `~/.escrow/config.json`:
       "defaultWallet": "main",
 
       "testDefaults": {
-        "amount": 100000000,
+        "amount": 1000,
         "disputeSplit": "50:50",
         "milestoneIndex": 0,
         "milestones": 2,
-        "multiAmounts": "50000000,50000000"
+        "multiAmounts": "500,500"
       }
     },
     "mainnet": {
@@ -556,6 +647,9 @@ escrow config set testnet.apiKey "key"
 # 2. Ejecutar workflow
 escrow test-single-release
 
+# O prueba multi-release
+escrow test-multi-release
+
 # ¡Listo! El flujo completo se ejecuta automáticamente
 ```
 
@@ -597,14 +691,17 @@ escrow approve CAZ6UQX7... --milestone 0
 ### Caso 4: Testing con Diferentes Cantidades
 
 ```bash
-# Test con 5 USDC
-escrow test-single-release --amount 50000000
+# Test con cantidad pequeña (dev environment)
+escrow test-single-release --amount 500
 
-# Test con 100 USDC
-escrow test-single-release --amount 1000000000
+# Test con cantidad por defecto
+escrow test-single-release --amount 1000
 
 # Test con split personalizado en disputa
-escrow test-single-dispute --amount 100000000 --split 20:80
+escrow test-single-dispute --amount 1000 --split 20:80
+
+# Test multi-release con diferentes amounts por milestone
+escrow test-multi-release --milestones 3 --amounts "300,400,300"
 ```
 
 ### Caso 5: Usar Diferentes Wallets
@@ -728,9 +825,11 @@ zkCaleb-dev
 
 - [x] Soporte multi-red (testnet/mainnet)
 - [x] Gestión de múltiples wallets
-- [x] Workflows automáticos de testing
+- [x] Workflows automáticos de testing single-release
+- [x] Workflows automáticos de testing multi-release
 - [x] Comandos individuales de operaciones
-- [ ] Workflows multi-release
+- [x] Soporte para disputas con múltiples wallets
+- [ ] Comandos de release para single-release
 - [ ] Comandos de consulta (get escrow info)
 - [ ] Soporte para custom contracts
 - [ ] Modo interactivo (prompts)
