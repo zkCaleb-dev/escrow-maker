@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/zkCaleb-dev/Escrow-Maker#readme",
   "dependencies": {
-    "@stellar/stellar-sdk": "^13.3.0",
+    "@stellar/stellar-sdk": "^14.3.3",
     "axios": "^1.9.0",
     "commander": "^14.0.0",
     "dotenv": "^16.5.0",
