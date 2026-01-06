@@ -163,11 +163,21 @@ There are two types of escrow contracts:
 
 ```json
 {
+  "symbol": "string",
   "address": "Address"
 }
 ```
 
-The Stellar asset contract address (e.g., USDC token address).
+The Stellar asset trustline information.
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `symbol` | string | ✅ | Asset symbol (e.g., "USDC") |
+| `address` | Address | ✅ | Stellar asset issuer address (classic Stellar address) |
+
+**Example for USDC on Testnet:**
+- `symbol`: `USDC`
+- `address`: `GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5` (issuer address)
 
 ### Flags (Multi-Release only)
 
